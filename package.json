@@ -1,0 +1,12 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "Logger server for upcoming messages",
+  "main": "server.js",
+  "author": "HediMuhamad <hedymuhamad461@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
