@@ -2,6 +2,7 @@ const fs = require("fs");
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser")
+const cors = require("cors");
 
 dotenv.config();
 const app = express();
@@ -13,14 +14,12 @@ const logFile = fs.createWriteStream('logs.log', {
 	flags: "a"
 })
 
-
 function configNumberPrefix(x, n){ 
 	const xLength = (x+"").length;
 	const difference = n-xLength;
 	
 	return difference<=0 ? x : "0".repeat(difference)+x;
 }
-
 
 
 function log(logMsg){
@@ -48,6 +47,8 @@ function log(logMsg){
 	logFile.write(logOutput+"\n");
 	console.log(logOutput);
 }
+
+app.use(cors())
 
 app.post("/", jsonParser, (req, res)=>{
 	log(req.body);
