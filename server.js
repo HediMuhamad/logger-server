@@ -40,7 +40,7 @@ function log(logMsg){
 	}, "")
 	
 	const logOutput = 
-	`[#${n++}]-` +
+	`[#${configNumberPrefix(n++, 10)}]-` +
 	`[${dateInHumanFormat} ${clockInHumanFormat}]: ` +
 	logMsgString;
 	
