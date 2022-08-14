@@ -55,7 +55,7 @@ app.post("/", jsonParser, (req, res)=>{
 	res.send("true");
 })
 
-const PORT = process.env.LOGGER_PORT || 9000;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, ()=>{
 	console.log(`SERVER STARTED AT PORT #${PORT}`);
 })
