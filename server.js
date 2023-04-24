@@ -1,61 +1,21 @@
-const fs = require("fs");
 const express = require("express");
 const dotenv = require("dotenv");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const logger = require("./logger.js");
 
 dotenv.config();
 const app = express();
 const jsonParser = bodyParser.json();
-let n = 0;
 
-const logFile = fs.createWriteStream('logs.log', {
-	autoClose: true,
-	flags: "a"
-})
+app.use(cors());
 
-function configNumberPrefix(x, n){ 
-	const xLength = (x+"").length;
-	const difference = n-xLength;
-	
-	return difference<=0 ? x : "0".repeat(difference)+x;
-}
-
-
-function log(logMsg){
-	
-	const date = new Date();
-	const dateInHumanFormat = date.toDateString().toString().replace(' ', ', ') 
-	const h=configNumberPrefix(date.getHours(), 2), 
-	m=configNumberPrefix(date.getMinutes(), 2),
-	s=configNumberPrefix(date.getSeconds(), 2),
-	ms=configNumberPrefix(date.getMilliseconds(), 3);
-	
-	const clockInHumanFormat = `${h}:${m}:${s}:${ms}`;
-	
-	const logMsgString = Object.keys(logMsg).reduce((p, key, i)=>{
-		const newField = `[${key}: ${logMsg[key]}]`
-		const link = i===0 ? "" : "-";
-		return (p + link + newField);
-	}, "")
-	
-	const logOutput = 
-	`[#${configNumberPrefix(n++, 10)}]-` +
-	`[${dateInHumanFormat} ${clockInHumanFormat}]: ` +
-	logMsgString;
-	
-	logFile.write(logOutput+"\n");
-	console.log(logOutput);
-}
-
-app.use(cors())
-
-app.post("/", jsonParser, (req, res)=>{
-	log(req.body);
-	res.send("true");
-})
+app.post("/", jsonParser, (req, res) => {
+  logger.info({ user: req.user, body: req.body });
+  res.sendStatus(200);
+});
 
 const PORT = process.env.PORT || 9000;
-app.listen(PORT, ()=>{
-	console.log(`SERVER STARTED AT PORT #${PORT}`);
-})
+app.listen(PORT, () => {
+  logger.info({ message: `SERVER STARTED AT PORT #${PORT}` });
+});
