@@ -1,17 +1,18 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const logger = require("./logger.js");
+const ipBlocker = require("./middlewares/ip-blocker.js");
 
 dotenv.config();
 const app = express();
 const jsonParser = bodyParser.json();
 
-app.use(cors());
+app.use(ipBlocker([process.env.ALLOWED_IP], []));
 
 app.post("/", jsonParser, (req, res) => {
-  logger.info({ user: req.user, body: req.body });
+  console.log(req.ip);
+  //   logger.info({ recieved: req.body });
   res.sendStatus(200);
 });
 
