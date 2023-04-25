@@ -8,6 +8,7 @@ module.exports = function (whiteList, BlackList) {
     }
 
     if (!isAllowed) {
+      console.log(`Access denied for ${req.ip}`);
       return res.status(403).send("Access denied");
     }
 
