@@ -11,7 +11,6 @@ const jsonParser = bodyParser.json();
 app.use(ipBlocker([process.env.ALLOWED_IP], []));
 
 app.post("/", jsonParser, (req, res) => {
-  console.log(req.ip);
   logger.info({ recieved: req.body });
   res.sendStatus(200);
 });
