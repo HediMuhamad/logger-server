@@ -1,10 +1,9 @@
 const express = require("express");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const logger = require("./logger.js");
 const ipBlocker = require("./middlewares/ip-blocker.js");
 
-dotenv.config();
 const app = express();
 const jsonParser = bodyParser.json();
 

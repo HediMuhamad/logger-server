@@ -4,8 +4,8 @@ const fs = require("fs");
 
 const date = new Date(Date.now());
 
-const logOnFile = false;
-const logOnConsole = true;
+const logOnFile = process.env.LOG_ON_FILE;
+const logOnConsole = process.env.LOG_ON_CONSOLE;
 const streams = [];
 
 if (logOnFile) {
